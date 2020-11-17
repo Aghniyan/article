@@ -7,7 +7,7 @@ use App\Repositories\Interfaces\User\UserInterfaces;
 
 class UserRepository implements UserInterfaces
 {
-    public function getByID(array $data)
+    public function getByID($id)
     {
     }
     public function store(array $data)
