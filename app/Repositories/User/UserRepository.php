@@ -7,12 +7,20 @@ use App\Repositories\Interfaces\User\UserInterfaces;
 
 class UserRepository implements UserInterfaces
 {
+    protected $user;
+
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
     public function getByID($id)
     {
+        return $this->user->find($id);
     }
     public function store(array $data)
     {
-        $user = User::create([
+        $user = $this->user->create([
             "name" => $data['name'],
             "email" => $data['email'],
             "password" => bcrypt($data['password']),
