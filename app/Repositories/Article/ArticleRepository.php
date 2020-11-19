@@ -15,8 +15,8 @@ class ArticleRepository implements ArticleInterfaces
         $this->article = $article;
     }
 
-    public function all($user){
-        return $this->article->where('user_id','=',$user)->get();
+    public function all($user,$request){
+        return $this->article->where('user_id','=',$user)->filter($request)->get();
     }
     public function getByID($id){
         return $this->article->find($id);

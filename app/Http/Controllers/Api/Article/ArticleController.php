@@ -3,42 +3,40 @@
 namespace App\Http\Controllers\Api\Article;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Article\ArticleRequest;
 use App\Repositories\Interfaces\Article\ArticleInterfaces;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 class ArticleController extends Controller
 {
     protected $article;
-
     public function __construct(ArticleInterfaces $article)
     {
         $this->article = $article;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $articles = $this->article->all($this->currentUser()->id);
+        $articles = $this->article->all(Auth::user()->id,$request);
         return response()->json(['data' => $articles], 200);
     }
 
     public function show($id)
     {
+        dd($id);
         $article = $this->article->getByID($id);
         return response()->json(['data' => $article], 200);
     }
 
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {
-        $data = $this->getData($request);
-        $article = $this->article->store($data);
+        $article = $this->article->store($request->all());
         return response()->json(['data' => $article], 201);
     }
 
-    public function update($id, Request $request)
+    public function update($id, ArticleRequest $request)
     {
-        $data = $this->getData($request);
-        $article = $this->article->update($id, $data);
+        $article = $this->article->update($id, $request->all());
         return response()->json(['data' => $article], 200);
     }
 
@@ -48,22 +46,10 @@ class ArticleController extends Controller
         return response()->json(['data' => $article], 200);
     }
 
-    private function getData($request){
-        return [
-            "user_id"=> $this->currentUser()->id,
-            "slug"=> $this->getSlug($request->title),
-            "title"=> $request->title,
-            "content"=> $request->content
-        ];
-    }
-
-    public function currentUser()
+    public function filter(Request $request)
     {
-        return Auth::user();
-    }
-
-    private function getSlug($data)
-    {
-        return str_replace(" ", "-", strtolower($data));
+        // dd($request);
+        $article = $this->article->filter($request);
+        return response()->json(['data' => $article], 200);
     }
 }

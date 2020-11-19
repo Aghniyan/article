@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Article;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleRequest extends FormRequest
 {
@@ -15,6 +16,15 @@ class ArticleRequest extends FormRequest
     {
         return true;
     }
+    protected function prepareForValidation()
+    {
+        $this->merge(
+            [
+                "slug" => str_replace(" ", "-", strtolower($this->title)),
+                "user_id" => Auth::user()->id
+            ]
+        );
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,8 +34,8 @@ class ArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required|max:255',
-            'content'=>'required',
+            'title' => 'required|max:255',
+            'content' => 'required',
         ];
     }
 }
