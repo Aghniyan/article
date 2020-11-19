@@ -15,19 +15,26 @@ class ArticleRepository implements ArticleInterfaces
         $this->article = $article;
     }
 
-    public function all($user,$request){
-        return $this->article->where('user_id','=',$user)->filter($request)->get();
+    public function all($request, $me)
+    {
+        if ($me)
+            return $this->article->where('user_id', '=', $me)->filter($request)->get();
+        return $this->article->filter($request)->get();
     }
-    public function getByID($id){
+    public function getByID($id)
+    {
         return $this->article->find($id);
     }
-    public function store(array $data){
+    public function store(array $data)
+    {
         return $this->article->create($data);
     }
-    public function update($id,array $data){
-        return $this->article->where('id',$id)->where('user_id','=',$data['user_id'])->update($data);
+    public function update($id, array $data)
+    {
+        return $this->article->where('id', $id)->where('user_id', '=', $data['user_id'])->update($data);
     }
-    public function delete($id){
+    public function delete($id)
+    {
         return $this->article->find($id)->delete($id);
     }
 }

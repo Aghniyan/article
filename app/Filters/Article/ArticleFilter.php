@@ -5,5 +5,7 @@ class ArticleFilter extends AbstractFilter
 {
     protected $filters = [
         'title'      => ArticleTitleFilter::class,
+        'date'       => ArticleDateFilter::class,
+        'user'       => ArticleUserFilter::class,
     ];
 }
