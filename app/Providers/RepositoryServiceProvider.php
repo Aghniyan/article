@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Article\ArticleRepository;
+use App\Repositories\Interfaces\Article\ArticleInterfaces;
 use Illuminate\Support\ServiceProvider;
 
 use App\Repositories\Interfaces\User\UserInterfaces;
@@ -20,6 +22,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             UserInterfaces::class,
             UserRepository::class
+        );
+        $this->app->bind(
+            ArticleInterfaces::class,
+            ArticleRepository::class
         );
     }
 
