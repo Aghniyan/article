@@ -15,6 +15,11 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('/{id}/me', 'Api\Article\ArticleController@show');
         Route::put('/{id}/me', 'Api\Article\ArticleController@update');
         Route::delete('/{id}/me', 'Api\Article\ArticleController@delete');
+        //comment
+        Route::get('/{article_id}/comment', 'Api\Article\CommentController@index');
+        Route::post('/{article_id}/comment', 'Api\Article\CommentController@store');
+        Route::put('/{article_id}/{id}/comment', 'Api\Article\CommentController@update');
+        Route::delete('{id}/comment', 'Api\Article\CommentController@delete');
     });
 });
 

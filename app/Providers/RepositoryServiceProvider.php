@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Repositories\Article\ArticleRepository;
+use App\Repositories\Article\CommentRepository;
 use App\Repositories\Interfaces\Article\ArticleInterfaces;
+use App\Repositories\Interfaces\Article\CommentInterfaces;
 use Illuminate\Support\ServiceProvider;
 
 use App\Repositories\Interfaces\User\UserInterfaces;
@@ -26,6 +28,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             ArticleInterfaces::class,
             ArticleRepository::class
+        );
+        $this->app->bind(
+            CommentInterfaces::class,
+            CommentRepository::class
         );
     }
 
